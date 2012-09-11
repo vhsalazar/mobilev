@@ -10,7 +10,7 @@
             // Called when capture operation is finished
             //
             function captureSuccess(mediaFiles) {
-                console.log(mediaFiles);
+                //console.log(mediaFiles);
                 var i, len;
                 for (i = 0, len = mediaFiles.length; i < len; i += 1) {
                     uploadFile(mediaFiles[i]);
@@ -31,9 +31,9 @@
                 // allowing user to capture up to 2 video clips
                 var imageModes = navigator.device.capture.supportedVideoModes;
                 //navigator.device.capture.supportedVideoModes[0] =  {type:'a', height:720, width:1280};
-                console.log('-----------------');
-                console.log(navigator.device.capture);
-                console.log('-----------------');
+                //console.log('-----------------');
+                //console.log(navigator.device.capture);
+                //console.log('-----------------');
                 navigator.device.capture.captureVideo(captureSuccess, captureError, {limit: 10, mode:'a'});
             }
             
@@ -69,5 +69,6 @@
     </head>
     <body>
         <button onclick="captureVideo();">Capture Video</button> <br>
+                <button onclick="alert('hi');">Hello</button> <br>
     </body>
 </html>

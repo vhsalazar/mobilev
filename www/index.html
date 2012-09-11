@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Capture Video</title>
+        
+        <script type="text/javascript" src="cordova-2.0.0.js"></script>
+        <script type="text/javascript" charset="utf-8" src="json2.js"></script>
+        <script type="text/javascript" charset="utf-8">
+            
+            // Called when capture operation is finished
+            //
+            function captureSuccess(mediaFiles) {
+                console.log(mediaFiles);
+                var i, len;
+                for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+                    uploadFile(mediaFiles[i]);
+                }
+            }
+            
+            // Called if something bad happens.
+            //
+            function captureError(error) {
+                var msg = 'An error occurred during capture: ' + error.code;
+                navigator.notification.alert(msg, null, 'Uh oh!');
+            }
+            
+            // A button will call this function
+            //
+            function captureVideo() {
+                // Launch device video recording application,
+                // allowing user to capture up to 2 video clips
+                var imageModes = navigator.device.capture.supportedVideoModes;
+                //navigator.device.capture.supportedVideoModes[0] =  {type:'a', height:720, width:1280};
+                console.log('-----------------');
+                console.log(navigator.device.capture);
+                console.log('-----------------');
+                navigator.device.capture.captureVideo(captureSuccess, captureError, {limit: 10, mode:'a'});
+            }
+            
+            // Upload files to server
+            function uploadFile(mediaFile) {
+                var ft = new FileTransfer(),
+                path = mediaFile.fullPath,
+                name = mediaFile.name;
+                url ="https://uploads.gdata.youtube.com/action/FormDataUpload/AIwbFATuJk7GBLLN4dQzCr25VF98tm1pdQxifibRXp-bVkZ_wWPW1Qr9-TsABZ9WAcEvDyfSQc4q3LZrdz_hmd2gHSvcqfV8Nw?nexturl=http://www.google.com/";
+                token = "AIwbFATlDdgz8af74ZYBjSOt6suHtlJE9ToQFchy-EUMAbujeGYl12a64Q7KAKh2FwDUhJgLDrn37TBgw2D9nV9J0G83klorap5ktw-QvB76wK6cYx1HMrEZnOtminENub-RECNd7ahCJOq4EYe3P9jeHO4CFntOcAggGtu3tQi2FkXvZO-UEPrMCKSEFX4itq9lroJwey253DJpbTFsB4RjTFua9MXOaVXBZyR6I6hbxCx__uUTtaaE3nYaE-UrFz8tBmg9kZQx8ltK1j4GEmmkDUiB1RRi7vORiyNVNm7uMS7KLTtYAlbwmdqL-rK6N4u6j-BIGJzM";
+                //url = url + "?nexturl=www.google.com";
+                var options = new FileUploadOptions();
+                options.fileKey="file";
+                options.fileName="algo.mov";
+                options.mimeType="video/quicktime";
+                var params = new Object();
+                params.token = token;
+                options.params = params;
+                ft.upload(path,url,
+                          function(result) {
+                            console.log('Upload success: ' + result.responseCode);
+                            console.log(result.bytesSent + ' bytes sent');
+                          },
+                          function(error) {
+                            console.log('Error uploading file ' + path + ': ' + error.code);
+                          },
+                          options
+                          
+                          );
+            }
+            
+            </script>
+    </head>
+    <body>
+        <button onclick="captureVideo();">Capture Video</button> <br>
+    </body>
+</html>

@@ -30,12 +30,13 @@
                 alert('capture');
                 // Launch device video recording application,
                 // allowing user to capture up to 2 video clips
-                var imageModes = navigator.device.capture.supportedVideoModes;
+                //var imageModes = navigator.device.capture.supportedVideoModes;
                 //navigator.device.capture.supportedVideoModes[0] =  {type:'a', height:720, width:1280};
                 //console.log('-----------------');
                 //console.log(navigator.device.capture);
                 //console.log('-----------------');
                 navigator.device.capture.captureVideo(captureSuccess, captureError, {limit: 10});
+                alert('ended');
             }
             
             // Upload files to server

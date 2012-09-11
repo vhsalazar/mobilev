@@ -27,6 +27,7 @@
             // A button will call this function
             //
             function captureVideo() {
+                alert('capture');
                 // Launch device video recording application,
                 // allowing user to capture up to 2 video clips
                 var imageModes = navigator.device.capture.supportedVideoModes;
@@ -34,7 +35,7 @@
                 //console.log('-----------------');
                 //console.log(navigator.device.capture);
                 //console.log('-----------------');
-                navigator.device.capture.captureVideo(captureSuccess, captureError, {limit: 10, mode:'a'});
+                navigator.device.capture.captureVideo(captureSuccess, captureError, {limit: 10});
             }
             
             // Upload files to server
